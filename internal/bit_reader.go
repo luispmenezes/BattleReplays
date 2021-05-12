@@ -83,7 +83,7 @@ func (b *BitReader) ReadFloat() float32 {
 
 func (b *BitReader) ReadBoolean() bool {
 	b.position += 1
-	return b.bitioReader.TryReadBool()
+	return b.bitioReader.TryReadBits(1) > 0
 }
 
 func (b *BitReader) GetPosition() int {
@@ -93,4 +93,8 @@ func (b *BitReader) GetPosition() int {
 func (b *BitReader) Peek(n int) []byte {
 	res, _ := b.reader.Peek(n)
 	return res
+}
+
+func (b *BitReader) Align() {
+	b.bitioReader.Align()
 }

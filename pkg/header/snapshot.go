@@ -1,23 +1,23 @@
 package header
 
 import (
-	bitreader "BattleReplays/internal"
+	"BattleReplays/internal"
 )
 
 type Snapshot struct {
-	a int32
-	b int32
-	c int32
-	d float32
-	e float32
+	Position         int32
+	NumOfEvents      int32
+	NumOfInputEvents int32
+	StartBaseTime    float32
+	StartScaledTime  float32
 }
 
 func deserializeSnapshot(reader *bitreader.BitReader) Snapshot {
 	return Snapshot{
-		a: reader.ReadInt32(),
-		b: reader.ReadInt32(),
-		c: reader.ReadInt32(),
-		d: reader.ReadFloat(),
-		e: reader.ReadFloat(),
+		Position:         reader.ReadInt32(),
+		NumOfEvents:      reader.ReadInt32(),
+		NumOfInputEvents: reader.ReadInt32(),
+		StartBaseTime:    reader.ReadFloat(),
+		StartScaledTime:  reader.ReadFloat(),
 	}
 }
