@@ -62,7 +62,9 @@ func DeserializeHeader(reader *bitreader.BitReader) (Header, error) {
 		header.NumOfInputEvents = reader.ReadInt32()
 		header.CompletelyRecorded = reader.ReadBoolean()
 		thumbnailSize := reader.ReadUInt16()
-		log.Printf("%d %d", header.GameplayVersion, header.AssetsRevision)
+		log.Printf("Gameplay Version: %d AssetsRevisions: %d", header.GameplayVersion, header.AssetsRevision)
+		log.Printf("Length: %f StartBaseTime: %f StartScaledTime: %f", header.Length, header.StartBaseTime, header.StartScaledTime)
+		log.Printf("NumOfEvents: %d NumOfInputEvents: %d CompletelyRecorded: %v", header.NumOfEvents, header.NumOfInputEvents, header.CompletelyRecorded)
 		log.Printf("ThumbnailSize: %d", thumbnailSize)
 
 		if thumbnailSize > 0 {
@@ -85,11 +87,11 @@ func DeserializeHeader(reader *bitreader.BitReader) (Header, error) {
 
 		matchIdSize := reader.ReadUInt8()
 		log.Printf("matchIdSize: %d", matchIdSize)
-
-		header.MatchIdAsArray = reader.ReadBytes(int(matchIdSize))
+		if matchIdSize > 0 {
+			header.MatchIdAsArray = reader.ReadBytes(int(matchIdSize))
+		}
 		header.MatchType = MatchType{typeId: reader.ReadUInt8()}
 		log.Printf("MatchType is %d: %s ", header.MatchType.typeId, header.MatchType.AsString())
-
 	}
 	return header, nil
 }

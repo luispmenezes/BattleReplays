@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-    f, err := os.Open("210511-182739.clientreplay")
+	f, err := os.Open("Battlerite-Example-Replay_1.4.clientreplay")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -17,31 +17,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	log.Println("##############################################################")
-
-	f2, err := os.Open("210511-183422.clientreplay")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f2.Close()
-
-	_, err = BattleReplays.NewParser(f2)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Println("##############################################################")
-
-	f3, err := os.Open("210509-211435.clientreplay")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f3.Close()
-
-	_, err = BattleReplays.NewParser(f3)
-	if err != nil {
-		log.Fatal(err)
-	}
 }
-

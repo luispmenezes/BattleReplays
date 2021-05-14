@@ -17,13 +17,13 @@ func NewParser(f *os.File) (*parser, error) {
 	replayStream := bufio.NewReader(f)
 
 	p := parser{
-		bitReader: bitreader.NewBitReader(replayStream, false),
+		bitReader: bitreader.NewBitReader(replayStream),
 	}
 
-	h,err := header.DeserializeHeader(p.bitReader)
+	h, err := header.DeserializeHeader(p.bitReader)
 
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
 	p.Header = h
