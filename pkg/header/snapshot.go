@@ -12,7 +12,7 @@ type Snapshot struct {
 	StartScaledTime  float32
 }
 
-func deserializeSnapshot(reader *bitreader.BitReader) Snapshot {
+func deserializeSnapshot(reader *bitreader.NetBuffer) Snapshot {
 	return Snapshot{
 		Position:         reader.ReadInt32(),
 		NumOfEvents:      reader.ReadInt32(),

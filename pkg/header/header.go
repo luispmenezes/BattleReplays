@@ -23,18 +23,16 @@ type Header struct {
 	TimedEventsData    []TimedEventData
 	MatchIdAsArray     []byte
 	MatchType          MatchType
-	BaseTypesToLoad    []GameObjectTypeId
+	BaseTypesToLoad    []GameObjectType
+	MapAsset           AssetGUID
 }
 
 const expectedHeaderVersionUUID = "d7c1be6b-8c69-5446-9d30-de9c7853975d"
 
-func DeserializeHeader(reader *bitreader.BitReader) (Header, error) {
+func DeserializeHeader(reader *bitreader.NetBuffer) (Header, error) {
 	header := Header{}
 
-	header.headerSize = (reader.ReadInt32() + 7) >> 3
-	log.Printf("HeaderSize: %d", header.headerSize)
-
-	headerUUIDSize := reader.ReadInt8()
+	headerUUIDSize := reader.ReadByte()
 	log.Printf("HeaderUUIDSize: %d", headerUUIDSize)
 
 	headerUUIDBytes := reader.ReadBytes(int(headerUUIDSize))
@@ -42,7 +40,6 @@ func DeserializeHeader(reader *bitreader.BitReader) (Header, error) {
 	if err != nil {
 		return header, errors.Wrap(err, "failed to parse Header UUID from bytes")
 	}
-
 	header.headerUUID = headerUUID.String()
 
 	if headerUUID.String() != expectedHeaderVersionUUID {
@@ -51,6 +48,7 @@ func DeserializeHeader(reader *bitreader.BitReader) (Header, error) {
 	}
 
 	checkpoint := reader.ReadInt32()
+	log.Println(checkpoint)
 
 	if checkpoint == 1 {
 		header.GameplayVersion = reader.ReadInt32()
@@ -85,13 +83,22 @@ func DeserializeHeader(reader *bitreader.BitReader) (Header, error) {
 			header.TimedEventsData = append(header.TimedEventsData, deserializeTimedEventData(reader))
 		}
 
-		matchIdSize := reader.ReadUInt8()
+		matchIdSize := reader.ReadByte()
 		log.Printf("matchIdSize: %d", matchIdSize)
 		if matchIdSize > 0 {
 			header.MatchIdAsArray = reader.ReadBytes(int(matchIdSize))
 		}
-		header.MatchType = MatchType{typeId: reader.ReadUInt8()}
+		header.MatchType = MatchType{typeId: reader.ReadByte()}
 		log.Printf("MatchType is %d: %s ", header.MatchType.typeId, header.MatchType.AsString())
+
+		baseTypesLen := reader.ReadInt16()
+		log.Printf("baseTypesLen: %d", baseTypesLen)
+		for i := 0; i < int(baseTypesLen); i++ {
+			header.BaseTypesToLoad = append(header.BaseTypesToLoad, deserializeGameObjectType(reader))
+		}
+
+		header.MapAsset = deserializeAssetGUID(reader)
+		log.Printf("Map Asset GUID: %v", header.MapAsset)
 	}
 	return header, nil
 }

@@ -10,7 +10,7 @@ type TimedEventData struct {
 	c int32
 }
 
-func deserializeTimedEventData(reader *bitreader.BitReader) TimedEventData{
+func deserializeTimedEventData(reader *bitreader.NetBuffer) TimedEventData {
 	return TimedEventData{
 		a: reader.ReadInt32(),
 		b: reader.ReadFloat(),
