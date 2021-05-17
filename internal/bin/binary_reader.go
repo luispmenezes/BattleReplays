@@ -83,3 +83,15 @@ func blockCopy(src []byte, srcOffset int, dst *[]byte, dstOffset int, count int)
 		(*dst)[dstOffset+i] = src[srcOffset+i]
 	}
 }
+
+func Pot(in uint) int {
+	num := 1
+	for {
+		in >>= 1
+		if in != 0 {
+			break
+		}
+		num++
+	}
+	return num
+}

@@ -50,7 +50,7 @@ func (n *NetBuffer) ReadFloat() float32 {
 		n.pos += 32
 		return res
 	}
-	dest := make([]byte, 4)
+	dest := make([]byte, 1024)
 	n.ReadBytesWithLenOffset(&dest, 0, 4)
 	return bin.ToSingle(dest, 0)
 }
@@ -71,4 +71,15 @@ func (n *NetBuffer) ReadInt16() int16 {
 	num := int16(bin.ReadUInt16(n.buffer, 16, n.pos))
 	n.pos += 16
 	return num
+}
+
+func (n *NetBuffer) ReadUInt32VarBits(numberOfBits int) uint32 {
+	num := bin.ReadUInt32(n.buffer, numberOfBits, n.pos)
+	n.pos += numberOfBits
+	return uint32(num)
+}
+
+func (n *NetBuffer) ReadRangedInteger(min, max int) int {
+	num := n.ReadUInt32VarBits(bin.Pot(uint(max - min)))
+	return int(int64(min) + int64(num))
 }

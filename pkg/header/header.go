@@ -2,6 +2,7 @@ package header
 
 import (
 	"BattleReplays/internal"
+	"encoding/hex"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"log"
@@ -25,6 +26,12 @@ type Header struct {
 	MatchType          MatchType
 	BaseTypesToLoad    []GameObjectType
 	MapAsset           AssetGUID
+	LocalUserId        UserId
+	TeamSize           uint8
+	RoundsToWin        uint8
+	LockedRounds       uint8
+	Team1Score         uint8
+	Team2Score         uint8
 }
 
 const expectedHeaderVersionUUID = "d7c1be6b-8c69-5446-9d30-de9c7853975d"
@@ -88,6 +95,8 @@ func DeserializeHeader(reader *bitreader.NetBuffer) (Header, error) {
 		if matchIdSize > 0 {
 			header.MatchIdAsArray = reader.ReadBytes(int(matchIdSize))
 		}
+		log.Println("MatchId: " + hex.EncodeToString(header.MatchIdAsArray))
+
 		header.MatchType = MatchType{typeId: reader.ReadByte()}
 		log.Printf("MatchType is %d: %s ", header.MatchType.typeId, header.MatchType.AsString())
 
@@ -99,6 +108,18 @@ func DeserializeHeader(reader *bitreader.NetBuffer) (Header, error) {
 
 		header.MapAsset = deserializeAssetGUID(reader)
 		log.Printf("Map Asset GUID: %v", header.MapAsset)
+
+		header.LocalUserId = deserializeUserId(reader)
+		log.Printf("LocalUserId: %v", header.LocalUserId)
+
+		header.TeamSize = reader.ReadByte()
+		log.Printf("TeamSize: %d", header.TeamSize)
+
+		header.RoundsToWin = reader.ReadByte()
+		log.Printf("RoundsToWin: %d", header.RoundsToWin)
+
+		numUsers := reader.ReadByte()
+		log.Printf("Num of Users: %d", numUsers)
 	}
 	return header, nil
 }
