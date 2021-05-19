@@ -73,13 +73,21 @@ func (n *NetBuffer) ReadInt16() int16 {
 	return num
 }
 
-func (n *NetBuffer) ReadUInt32VarBits(numberOfBits int) uint32 {
-	num := bin.ReadUInt32(n.buffer, numberOfBits, n.pos)
+func (n *NetBuffer) ReadInt32VariableBits(numberOfBits int) int32 {
+	num1 := bin.ReadUInt32(n.buffer, numberOfBits, n.pos)
 	n.pos += numberOfBits
-	return uint32(num)
+	if numberOfBits == 32 {
+		return int32(num1)
+	}
+	num2 := 1<<numberOfBits - 1
+	if int64(num1)&int64(num2) == 0 {
+		return int32(num1)
+	}
+	num3 := 4294967295>>33 - numberOfBits
+	return -(int32(num1)&int32(num3) + 1)
 }
 
 func (n *NetBuffer) ReadRangedInteger(min, max int) int {
-	num := n.ReadUInt32VarBits(bin.Pot(uint(max - min)))
+	num := n.ReadInt32VariableBits(bin.Pot(uint(max - min)))
 	return int(int64(min) + int64(num))
 }
