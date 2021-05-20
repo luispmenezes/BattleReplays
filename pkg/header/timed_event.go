@@ -5,15 +5,15 @@ import (
 )
 
 type TimedEventData struct {
-	a int32
-	b float32
-	c int32
+	EventId   int32
+	EventTime float32
+	Round     int32
 }
 
 func deserializeTimedEventData(reader *bitreader.NetBuffer) TimedEventData {
 	return TimedEventData{
-		a: reader.ReadInt32(),
-		b: reader.ReadFloat(),
-		c: reader.ReadInt32(),
+		EventId:   reader.ReadInt32(),
+		EventTime: reader.ReadFloat(),
+		Round:     reader.ReadInt32(),
 	}
 }

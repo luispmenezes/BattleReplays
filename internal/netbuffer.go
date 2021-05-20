@@ -3,14 +3,16 @@ package bitreader
 import "BattleReplays/internal/bin"
 
 type NetBuffer struct {
-	buffer []byte
-	pos    int
+	buffer     []byte
+	pos        int
+	bitsToRead int
 }
 
-func NewNetBuffer(buffer []byte, pos int) *NetBuffer {
+func NewNetBuffer(buffer []byte, pos, bitsToRead int) *NetBuffer {
 	return &NetBuffer{
-		buffer: buffer,
-		pos:    pos,
+		buffer:     buffer,
+		pos:        pos,
+		bitsToRead: bitsToRead,
 	}
 }
 
@@ -90,4 +92,48 @@ func (n *NetBuffer) ReadInt32VariableBits(numberOfBits int) int32 {
 func (n *NetBuffer) ReadRangedInteger(min, max int) int {
 	num := n.ReadInt32VariableBits(bin.Pot(uint(max - min)))
 	return int(int64(min) + int64(num))
+}
+
+func (n *NetBuffer) ReadVariableUInt32() uint {
+	num1 := 0
+	num2 := 0
+
+	for n.bitsToRead-n.pos >= 8 {
+		num3 := n.ReadByte()
+		num1 |= (int(num3) & 127) << num2
+		num2 += 7
+		if (int(num3) & 128) == 0 {
+			return uint(num1)
+		}
+	}
+	return uint(num1)
+}
+
+func (n *NetBuffer) ReadString() string {
+	num := n.ReadVariableUInt32()
+	if num <= 0 {
+		return ""
+	}
+	if uint64(n.bitsToRead-n.pos) < uint64(num*8) {
+		n.pos = n.bitsToRead
+		return ""
+	}
+	if (n.pos & 7) == 0 {
+		startIdx := n.pos >> 3
+		stopIdx := startIdx + int(num)
+		str := string(n.buffer[startIdx:stopIdx])
+		n.pos += 8 * int(num)
+		return str
+	}
+	bytes := n.ReadBytes(int(num))
+	return string(bytes)
+}
+
+func (n *NetBuffer) ReadUInt64() uint64 {
+	num1 := int64(bin.ReadUInt32(n.buffer, 32, n.pos))
+	n.pos += 32
+	num2 := int64(bin.ReadUInt32(n.buffer, 32, n.pos)) << 32
+	num3 := num1 + num2
+	n.pos += 32
+	return uint64(num3)
 }

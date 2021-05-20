@@ -11,11 +11,11 @@ func (m MatchType) AsString() string {
 
 	idStrings := []string{"UNKNOWN",
 		"QUICK2V2",
-		"QUICK3V3",
 		"DEBUG",
 		"PRIVATE",
 		"TUTORIAL",
 		"TRAINING",
+		"QUICK3V3",
 		"VSAI",
 		"BRAWL",
 		"CAMPAIGN",

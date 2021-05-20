@@ -28,7 +28,7 @@ func NewParser(f *os.File) (*parser, error) {
 	_, _ = replayStream.Read(buf)
 
 	p := parser{
-		netBuffer: bitreader.NewNetBuffer(buf, 0),
+		netBuffer: bitreader.NewNetBuffer(buf, 0, int(bitsToRead)),
 	}
 
 	h, err := header.DeserializeHeader(p.netBuffer)

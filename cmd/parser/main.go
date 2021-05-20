@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	f, err := os.Open("Battlerite-Example-Replay_1.4.clientreplay")
+	f, err := os.Open("210510-170214.clientreplay")
 	if err != nil {
 		log.Fatal(err)
 	}
