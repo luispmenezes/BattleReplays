@@ -6,9 +6,9 @@ import (
 )
 
 type UserData struct {
-	UserId      UserId
+	UserIdObj   UserId
 	Username    string
-	A           uint64
+	UserId      uint64
 	Team        int
 	B           bool
 	C           bool
@@ -18,9 +18,9 @@ type UserData struct {
 
 func deserializeUserData(reader *bitreader.NetBuffer) UserData {
 	userData := UserData{
-		UserId:      deserializeUserId(reader),
+		UserIdObj:   deserializeUserId(reader),
 		Username:    reader.ReadString(),
-		A:           reader.ReadUInt64(),
+		UserId:      reader.ReadUInt64(),
 		Team:        int(reader.ReadByte()),
 		B:           reader.ReadBoolean(),
 		C:           reader.ReadBoolean(),

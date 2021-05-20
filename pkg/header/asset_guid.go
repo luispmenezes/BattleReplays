@@ -31,7 +31,7 @@ func (ag AssetGUID) String() string {
 	binary.LittleEndian.PutUint32(c, uint32(ag.c))
 	d := make([]byte, 4)
 	binary.LittleEndian.PutUint32(d, uint32(ag.d))
-	bytes := make([]byte, 16)
+	var bytes []byte
 	bytes = append(bytes, a...)
 	bytes = append(bytes, b...)
 	bytes = append(bytes, c...)
