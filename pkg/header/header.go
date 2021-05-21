@@ -1,9 +1,9 @@
 package header
 
 import (
-	"BattleReplays/internal"
 	"encoding/hex"
 	"github.com/google/uuid"
+	bitreader "github.com/luispmenezes/BattleReplays/internal"
 	"github.com/pkg/errors"
 	"log"
 )

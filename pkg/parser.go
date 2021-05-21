@@ -1,10 +1,10 @@
 package BattleReplays
 
 import (
-	"BattleReplays/internal"
-	"BattleReplays/pkg/header"
 	"bufio"
 	"encoding/binary"
+	bitreader "github.com/luispmenezes/BattleReplays/internal"
+	"github.com/luispmenezes/BattleReplays/pkg/header"
 	"log"
 	"os"
 )

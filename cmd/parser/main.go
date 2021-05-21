@@ -1,7 +1,7 @@
 package main
 
 import (
-	BattleReplays "BattleReplays/pkg"
+	BattleReplays "github.com/luispmenezes/BattleReplays/pkg"
 	"log"
 	"os"
 )

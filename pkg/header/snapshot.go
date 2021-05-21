@@ -1,7 +1,7 @@
 package header
 
 import (
-	"BattleReplays/internal"
+	bitreader "github.com/luispmenezes/BattleReplays/internal"
 )
 
 type Snapshot struct {

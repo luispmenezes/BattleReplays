@@ -1,6 +1,6 @@
 package header
 
-import bitreader "BattleReplays/internal"
+import bitreader "github.com/luispmenezes/BattleReplays/internal"
 
 type GameObjectType struct {
 	Id int32
