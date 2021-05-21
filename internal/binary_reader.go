@@ -1,11 +1,11 @@
-package bin
+package bitreader
 
 import (
 	"encoding/binary"
 	"math"
 )
 
-func ReadByte(srcBuff []byte, len, start int) byte {
+func BinReadByte(srcBuff []byte, len, start int) byte {
 	index := start >> 3
 	num1 := start - index*8
 	if num1 == 0 && len == 8 {
@@ -20,7 +20,7 @@ func ReadByte(srcBuff []byte, len, start int) byte {
 	return num2 | (num4 << uint8(len-num3))
 }
 
-func ReadBytes(srcBuf []byte, len int, post int, destBuf *[]byte, destOffset int) {
+func BinReadBytes(srcBuf []byte, len int, post int, destBuf *[]byte, destOffset int) {
 	srcOffset := post >> 3
 	num1 := post - srcOffset*8
 	if num1 == 0 {
@@ -38,43 +38,43 @@ func ReadBytes(srcBuf []byte, len int, post int, destBuf *[]byte, destOffset int
 	}
 }
 
-func ReadUInt32(buffer []byte, len, start int) uint32 {
+func BinReadUInt32(buffer []byte, len, start int) uint32 {
 	if len <= 8 {
-		return uint32(ReadByte(buffer, len, start))
+		return uint32(BinReadByte(buffer, len, start))
 	}
-	var num1 = uint32(ReadByte(buffer, 8, start))
+	var num1 = uint32(BinReadByte(buffer, 8, start))
 	len -= 8
 	start += 8
 	if len <= 8 {
-		return num1 | uint32(ReadByte(buffer, len, start))<<8
+		return num1 | uint32(BinReadByte(buffer, len, start))<<8
 	}
-	var num2 = num1 | uint32(ReadByte(buffer, 8, start))<<8
+	var num2 = num1 | uint32(BinReadByte(buffer, 8, start))<<8
 	len -= 8
 	start += 8
 	if len <= 8 {
-		var num3 = uint32(ReadByte(buffer, len, start)) << 16
+		var num3 = uint32(BinReadByte(buffer, len, start)) << 16
 		return num2 | num3
 	}
-	var num4 = num2 | uint32(ReadByte(buffer, 8, start))<<16
+	var num4 = num2 | uint32(BinReadByte(buffer, 8, start))<<16
 	len -= 8
 	start += 8
-	return num4 | uint32(ReadByte(buffer, len, start))<<24
+	return num4 | uint32(BinReadByte(buffer, len, start))<<24
 }
 
-func ReadUInt16(buffer []byte, len, start int) uint16 {
+func BinReadUInt16(buffer []byte, len, start int) uint16 {
 	if len <= 8 {
-		return uint16(ReadByte(buffer, len, start))
+		return uint16(BinReadByte(buffer, len, start))
 	}
-	num := uint16(ReadByte(buffer, 8, start))
+	num := uint16(BinReadByte(buffer, 8, start))
 	len -= 8
 	start += 8
 	if len <= 8 {
-		num |= uint16(uint(ReadByte(buffer, len, start)) << 8)
+		num |= uint16(uint(BinReadByte(buffer, len, start)) << 8)
 	}
 	return num
 }
 
-func ToSingle(source []byte, startIdx int) float32 {
+func BinToSingle(source []byte, startIdx int) float32 {
 	return math.Float32frombits(binary.LittleEndian.Uint32(source[startIdx : startIdx+4]))
 }
 
@@ -84,7 +84,7 @@ func blockCopy(src []byte, srcOffset int, dst *[]byte, dstOffset int, count int)
 	}
 }
 
-func Pot(in uint) int {
+func BinPot(in uint) int {
 	num := 1
 	for {
 		in >>= 1
