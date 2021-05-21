@@ -1,9 +1,9 @@
 package header
 
 import (
-	bitreader "BattleReplays/internal"
 	"encoding/binary"
 	"encoding/hex"
+	bitreader "github.com/luispmenezes/battle-replays/internal"
 )
 
 type AssetGUID struct {

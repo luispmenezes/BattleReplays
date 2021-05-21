@@ -1,8 +1,6 @@
 package header
 
-import (
-	"BattleReplays/internal"
-)
+import bitreader "github.com/luispmenezes/battle-replays/internal"
 
 type TimedEventData struct {
 	EventId   int32

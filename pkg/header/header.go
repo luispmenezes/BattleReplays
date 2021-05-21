@@ -1,10 +1,9 @@
 package header
 
 import (
-	"BattleReplays/internal"
-	"BattleReplays/pkg/utils"
 	"encoding/hex"
 	"github.com/google/uuid"
+	bitreader "github.com/luispmenezes/battle-replays/internal"
 	"github.com/pkg/errors"
 	"log"
 )
@@ -112,9 +111,8 @@ func DeserializeHeader(reader *bitreader.NetBuffer) (Header, error) {
 			header.BaseTypesToLoad = append(header.BaseTypesToLoad, deserializeGameObjectType(reader))
 		}
 
-		header.mapAsset = deserializeAssetGUID(reader)
-		header.MapName = utils.GetMapFromId(header.mapAsset.String())
-		log.Printf("Map Asset GUID: %v (%s)", header.mapAsset, header.MapName)
+		header.MapAsset = deserializeAssetGUID(reader)
+		log.Printf("Map Asset GUID: %v", header.MapAsset)
 
 		header.LocalUserId = deserializeUserId(reader)
 		log.Printf("LocalUserId: %v", header.LocalUserId)
@@ -138,9 +136,7 @@ func DeserializeHeader(reader *bitreader.NetBuffer) (Header, error) {
 			header.Users = append(header.Users, deserializeUserData(reader))
 		}
 
-		for _, userData := range header.Users {
-			log.Println(userData)
-		}
+		log.Println(header.Users)
 	}
 	return header, nil
 }

@@ -1,6 +1,6 @@
 package header
 
-import bitreader "BattleReplays/internal"
+import bitreader "github.com/luispmenezes/battle-replays/internal"
 
 type UserId struct {
 	Index      uint
