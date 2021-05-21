@@ -1,7 +1,7 @@
 package main
 
 import (
-	BattleReplays "github.com/luispmenezes/BattleReplays/pkg"
+	battlereplays "github.com/luispmenezes/battle-replays/pkg"
 	"log"
 	"os"
 )
@@ -13,8 +13,10 @@ func main() {
 	}
 	defer f.Close()
 
-	_, err = BattleReplays.NewParser(f)
+	header, err := battlereplays.NewParser(f)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	log.Println(header)
 }

@@ -4,5 +4,5 @@ go 1.16
 
 require (
 	github.com/google/uuid v1.2.0
-	github.com/luispmenezes/BattleReplays v0.0.0-20210521162927-44a13057b788
+	github.com/pkg/errors v0.9.1
 )

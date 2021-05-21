@@ -1,6 +1,4 @@
 github.com/google/uuid v1.2.0 h1:qJYtXnJRWmpe7m/3XlyhrsLrEURqHRM2kxzoxXqyUDs=
 github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/luispmenezes/BattleReplays v0.0.0-20210521162927-44a13057b788 h1:ti1KjrOl7g2WOCH2IVvEowZwOFMl5EFsK3XiijIFPxo=
-github.com/luispmenezes/BattleReplays v0.0.0-20210521162927-44a13057b788/go.mod h1:08vyMLC+dcfgop1Zn4o9SisFPD8wmHY+qNMAKEaevCU=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

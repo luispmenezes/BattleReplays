@@ -1,6 +1,6 @@
 package bitreader
 
-import "github.com/luispmenezes/BattleReplays/internal/bin"
+import "github.com/luispmenezes/battle-replays/internal/bin"
 
 type NetBuffer struct {
 	buffer     []byte
