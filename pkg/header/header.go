@@ -3,7 +3,7 @@ package header
 import (
 	"encoding/hex"
 	"github.com/google/uuid"
-	bitreader "github.com/luispmenezes/BattleReplays/internal"
+	bitreader "github.com/luispmenezes/battle-replays/internal"
 	"github.com/pkg/errors"
 	"log"
 )

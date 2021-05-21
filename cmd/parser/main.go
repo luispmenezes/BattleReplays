@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	f, err := os.Open("210510-170214.clientreplay")
+	f, err := os.Open("210511-182739.clientreplay")
 	if err != nil {
 		log.Fatal(err)
 	}

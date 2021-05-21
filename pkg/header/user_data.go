@@ -1,8 +1,8 @@
 package header
 
 import (
-	bitreader "github.com/luispmenezes/BattleReplays/internal"
-	"github.com/luispmenezes/BattleReplays/pkg/utils"
+	bitreader "github.com/luispmenezes/battle-replays/internal"
+	"github.com/luispmenezes/battle-replays/pkg/utils"
 )
 
 type UserData struct {

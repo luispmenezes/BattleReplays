@@ -3,7 +3,7 @@ package header
 import (
 	"encoding/binary"
 	"encoding/hex"
-	bitreader "github.com/luispmenezes/BattleReplays/internal"
+	bitreader "github.com/luispmenezes/battle-replays/internal"
 )
 
 type AssetGUID struct {
